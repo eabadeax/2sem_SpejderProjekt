@@ -1,0 +1,46 @@
+﻿@page
+@model _2sem_SpejderProjekt.Pages.Activities.CreateModel
+
+<h1>Opret aktivitet</h1>
+
+<form method="post">
+
+    <div asp-validation-summary="All"></div>
+
+    <label asp-for="Activity.Name">Navn:</label>
+    <input asp-for="Activity.Name" />
+    <br />
+
+    <label asp-for="Activity.Description">Beskrivelse:</label>
+    <input asp-for="Activity.Description" />
+    <br />
+
+    <label asp-for="Activity.Date">Dato:</label>
+    <input asp-for="Activity.Date" type="date" />
+    <br />
+
+    <label asp-for="Activity.StartTime">Starttidspunkt:</label>
+    <input asp-for="Activity.StartTime" type="time" />
+    <br />
+
+    <label asp-for="Activity.EndTime">Sluttidspunkt:</label>
+    <input asp-for="Activity.EndTime" type="time" />
+    <br />
+
+    <label asp-for="Activity.MaxParticipants">Max deltagere:</label>
+    <input asp-for="Activity.MaxParticipants" type="number" min="1" />
+    <br />
+
+    <label asp-for="Activity.MinimumAge">Minimumsalder:</label>
+    <input asp-for="Activity.MinimumAge" type="number" min="0" />
+    <br />
+
+    <label asp-for="Activity.MaximumAge">Maksimumsalder:</label>
+    <input asp-for="Activity.MaximumAge" type="number" min="0" />
+    <br />
+
+    <button type="submit">Opret aktivitet</button>
+
+    <a asp-page="./Index">Tilbage</a>
+
+</form>

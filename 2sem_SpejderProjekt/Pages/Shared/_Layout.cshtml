@@ -18,7 +18,34 @@
                 De Lyserøde Spejdere
             </a>
 
+
             <div>
+
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <span class="me-2">
+                        Hej, @User.Identity.Name
+                    </span>
+
+                    <form method="post"
+                          asp-page="/Account/Login"
+                          asp-page-handler="Logout"
+                          class="d-inline">
+
+                        <button type="submit" class="btn btn-secondary">
+                            Log ud
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <a asp-page="/Account/Login"
+                       class="btn btn-primary">
+                        Log ind
+                    </a>
+                }
+
+
                 <a asp-page="/Index" class="btn btn-outline-primary">
                     Forside
                 </a>

@@ -1,11 +1,13 @@
 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using _2sem_SpejderProjekt.Models;
 using _2sem_SpejderProjekt.Repositories;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace _2sem_SpejderProjekt.Pages.Activities
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         private readonly ActivityRepository _activityRepository;

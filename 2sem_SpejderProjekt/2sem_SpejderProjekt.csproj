@@ -5,6 +5,7 @@
     <RootNamespace>_2sem_SpejderProjekt</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <UserSecretsId>04312fd3-963f-4e82-a8ef-233490c53e71</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

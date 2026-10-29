@@ -1,0 +1,67 @@
+﻿@page
+@model _2sem_SpejderProjekt.Pages.Activities.EditModel
+
+<h1>Rediger aktivitet</h1>
+
+<form method="post">
+
+    <input type="hidden" asp-for="Activity.ActivityId" />
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Activity.Name">Navn:</label>
+        <input asp-for="Activity.Name" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Activity.Description">Beskrivelse:</label>
+        <textarea asp-for="Activity.Description"
+                  class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Activity.Date">Dato:</label>
+        <input asp-for="Activity.Date" type="date"
+               class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Activity.StartTime">Starttidspunkt:</label>
+        <input asp-for="Activity.StartTime" type="time"
+               class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Activity.EndTime">Sluttidspunkt:</label>
+        <input asp-for="Activity.EndTime" type="time"
+               class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Activity.MaxParticipants">Max deltagere:</label>
+        <input asp-for="Activity.MaxParticipants" type="number"
+               min="1" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Activity.MinimumAge">Minimumsalder:</label>
+        <input asp-for="Activity.MinimumAge" type="number"
+               min="0" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Activity.MaximumAge">Maksimumsalder:</label>
+        <input asp-for="Activity.MaximumAge" type="number"
+               min="0" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Gem ændringer
+    </button>
+
+    <a asp-page="./Index" class="btn btn-secondary">
+        Annuller
+    </a>
+
+</form>

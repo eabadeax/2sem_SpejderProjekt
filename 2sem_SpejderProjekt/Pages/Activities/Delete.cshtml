@@ -1,0 +1,27 @@
+﻿@page
+@model _2sem_SpejderProjekt.Pages.Activities.DeleteModel
+
+<h1>Slet aktivitet</h1>
+
+<p>Er du sikker på, at du vil slette denne aktivitet?</p>
+
+<h3>@Model.Activity.Name</h3>
+
+<p>Beskrivelse: @Model.Activity.Description</p>
+<p>Dato: @Model.Activity.Date.ToString("dd-MM-yyyy")</p>
+<p>Max deltagere: @Model.Activity.MaxParticipants</p>
+
+<form method="post">
+
+    <input type="hidden" name="id"
+           value="@Model.Activity.ActivityId" />
+
+    <button type="submit" class="btn btn-danger">
+        Slet aktivitet
+    </button>
+
+    <a asp-page="./Index" class="btn btn-secondary">
+        Annuller
+    </a>
+
+</form>

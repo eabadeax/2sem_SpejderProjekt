@@ -12,6 +12,12 @@
     </a>
 }
 
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <p class="text-danger">@Model.ErrorMessage</p>
+}
+
+
 @if (Model.Activities.Count == 0)
 {
     <p>Der er endnu ingen aktiviteter oprettet.</p>
@@ -24,10 +30,11 @@ else
                 <th>Navn</th>
                 <th>Beskrivelse</th>
                 <th>Dato</th>
-                <th>Start</th>
-                <th>Slut</th>
+                <th>Tidspunkt</th>
+                <th>Minimum alder</th>
+                <th>Max alder</th>
                 <th>Max deltagere</th>
-                @if (User.IsInRole("Admin"))
+                @if (User.IsInRole("Admin") || User.IsInRole("Scout"))
                 {
                     <th>Handlinger</th>
                 }
@@ -36,27 +43,86 @@ else
         <tbody>
             @foreach (var activity in Model.Activities)
             {
+                int count = Model.ParticipantCounts
+                  .GetValueOrDefault(activity.ActivityId);
+
+                bool registered = Model.RegisteredActivityIds
+                    .Contains(activity.ActivityId);
+
                 <tr>
                     <td>@activity.Name</td>
                     <td>@activity.Description</td>
                     <td>@activity.Date.ToString("dd-MM-yyyy")</td>
-                    <td>@activity.StartTime.ToString(@"hh\:mm")</td>
-                    <td>@activity.EndTime.ToString(@"hh\:mm")</td>
-                    <td>@activity.MaxParticipants</td>
-                    @if (User.IsInRole("Admin"))
+                    <td>
+                        @activity.StartTime.ToString(@"hh\:mm")
+                        -
+                        @activity.EndTime.ToString(@"hh\:mm")
+                    </td>
+                    <td> @(activity.MinimumAge?.ToString() ?? "Ingen")</td>
+                    <td> @(activity.MaximumAge?.ToString() ?? "Ingen") </td>
+                    <td>
+                        @count / @activity.MaxParticipants
+                    </td>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Scout"))
                     {
                         <td>
-                            <a asp-page="./Edit"
-                               asp-route-id="@activity.ActivityId"
-                               class="btn btn-primary btn-sm">
-                                Rediger
-                            </a>
+                            @if (User.IsInRole("Scout"))
+                            {
+                                if (registered)
+                                {
+                                    <form method="post"
+                                          asp-page-handler="Unregister">
+                                        <input type="hidden"
+                                               name="activityId"
+                                               value="@activity.ActivityId" />
 
-                            <a asp-page="./Delete"
-                               asp-route-id="@activity.ActivityId"
-                               class="btn btn-danger btn-sm">
-                                Slet
-                            </a>
+                                        <button type="submit"
+                                                class="btn btn-danger btn-sm">
+                                            Frameld
+                                        </button>
+                                    </form>
+                                }
+                                else if (count >= activity.MaxParticipants)
+                                {
+                                    <span>Fuldt booket</span>
+                                }
+                                else
+                                {
+                                    <form method="post"
+                                          asp-page-handler="Register">
+                                        <input type="hidden"
+                                               name="activityId"
+                                               value="@activity.ActivityId" />
+
+                                        <button type="submit"
+                                                class="btn btn-primary btn-sm">
+                                            Tilmeld
+                                        </button>
+                                    </form>
+                                }
+                            }
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a asp-page="./Participants"
+                                   asp-route-id="@activity.ActivityId"
+                                   class="btn btn-secondary btn-sm">
+                                    Se deltagere
+                                </a>
+
+                                <a asp-page="./Edit"
+                                   asp-route-id="@activity.ActivityId"
+                                   class="btn btn-primary btn-sm">
+                                    Rediger
+                                </a>
+
+                                <a asp-page="./Delete"
+                                   asp-route-id="@activity.ActivityId"
+                                   class="btn btn-danger btn-sm">
+                                    Slet
+                                </a>
+                            }
+                      
                         </td>
                     }
                 </tr>
@@ -66,5 +132,5 @@ else
 }
 
 <a asp-page="/Index" class="btn btn-secondary">
-    Tilbage til forsiden
+    Tilbage
 </a>

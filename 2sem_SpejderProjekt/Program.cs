@@ -26,6 +26,7 @@ builder.Services.AddAuthorization();
 
 
 builder.Services.AddScoped<ActivityRepository>();
+builder.Services.AddScoped<RegistrationRepository>();
 
 // Forbind til databasen
 builder.Services.AddDbContext<AppDbContext>(options =>

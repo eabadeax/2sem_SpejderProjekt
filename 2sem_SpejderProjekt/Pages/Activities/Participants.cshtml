@@ -1,0 +1,35 @@
+﻿@page
+@model _2sem_SpejderProjekt.Pages.Activities.ParticipantsModel
+
+<h1>Deltagere – @Model.Activity.Name</h1>
+
+<p>Antal tilmeldte: @Model.Participants.Count</p>
+
+@if (Model.Participants.Count == 0)
+{
+    <p>Ingen spejdere er tilmeldt denne aktivitet endnu.</p>
+}
+else
+{
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Navn</th>
+                <th>Alder</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var scout in Model.Participants)
+            {
+                <tr>
+                    <td>@scout.Name</td>
+                    <td>@scout.Age</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<a asp-page="./Index" class="btn btn-secondary">
+    Tilbage til aktiviteter
+</a>

@@ -108,6 +108,11 @@ namespace _2sem_SpejderProjekt.Migrations
 
                     b.HasKey("RegistrationId");
 
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("ScoutId", "ActivityId")
+                        .IsUnique();
+
                     b.ToTable("Registrations");
                 });
 
@@ -161,6 +166,21 @@ namespace _2sem_SpejderProjekt.Migrations
                     b.HasKey("BadgeId");
 
                     b.ToTable("ScoutBadges");
+                });
+
+            modelBuilder.Entity("_2sem_SpejderProjekt.Registration", b =>
+                {
+                    b.HasOne("_2sem_SpejderProjekt.Models.Activity", null)
+                        .WithMany()
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("_2sem_SpejderProjekt.Scout", null)
+                        .WithMany()
+                        .HasForeignKey("ScoutId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
